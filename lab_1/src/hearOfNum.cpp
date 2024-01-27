@@ -31,6 +31,6 @@ bool hearOfNum(string day, int num){
         return num == Sunday1Num || num == Sunday2Num;
     } else {
         std::cout << "Не день недели\n";
-        return true;
+        return false;
     }
 }
