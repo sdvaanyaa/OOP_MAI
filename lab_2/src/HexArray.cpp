@@ -21,9 +21,11 @@ HexArray::HexArray(const size_t &n, char t)
 
     if (!isHexSymbolChar(t)) throw std::logic_error("not a hex-number: unknown character in hex: " + t);
 
+    int value = (t >= '0' && t <= '9') ? (t - '0') : (t - 'A' + 10);
+
     _array = new unsigned char[n];
     for (size_t i = 0; i < n; ++i)
-        _array[i] = t;
+        _array[i] = value;
     _size = n;
 }
 
@@ -57,7 +59,7 @@ HexArray::HexArray(const std::string &t)
 
     // for(size_t i{0};i<_size;++i) _array[i] = t[i];
 
-    if (t[0] == '0') {throw std::logic_error("not a hex-number: zero at the beginning");}
+    if (t[0] == '0' and _size > 1) {throw std::logic_error("not a hex-number: zero at the beginning");}
 
     for (size_t i = 0; i < _size; ++i)
     {

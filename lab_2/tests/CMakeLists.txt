@@ -13,3 +13,4 @@ add_executable(testslab2 test.cpp ../src/HexArray.cpp)
 target_link_libraries(testslab2 ${GTEST_LIBRARIES})
 
 add_test(NAME BASIC COMMAND tests1)
+
