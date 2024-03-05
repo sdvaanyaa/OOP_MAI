@@ -64,17 +64,18 @@ public:
         return allocatedBlocks;
     }
 
-    void deallocate(size_t blockSize) {
-        const auto& blocks = _allocated_blocks[blockSize];
+    void deallocate(size_t n, std::vector<T*>& blocks) {
+        for (size_t i = 0; i < n && !blocks.empty(); ++i) {
+            T* p = blocks.back();
+            blocks.pop_back();
 
-        for (T* p : blocks) {
-            _free_blocks[blockSize].push_back(p);
-            _used_blocks[p] = false;
+            auto it = _used_blocks.find(p);
+            if (it != _used_blocks.end()) {
+                _used_blocks.erase(it);
+                _free_blocks.push_back(p);
+            }
         }
-
-        _allocated_blocks[blockSize].clear();
     }
-
 
     template <typename U, typename... Args>
     void construct(U *p, Args &&...args)
