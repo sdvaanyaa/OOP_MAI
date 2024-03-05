@@ -5,18 +5,20 @@
 
 int main(){
     HexArray hx1(1, 'A');
-    HexArray hx2(1, 2);
+    HexArray hx2(1, 3);
 
-    HexArray correctSum("12");
+    HexArray correctSum("13");
     HexArray correctDiff("8");
 
     HexArray sum = hx1 + hx2;
     HexArray diff = hx1 - hx2;
 
-    hx1.debugPrint();
-    hx2.debugPrint();
-    sum.debugPrint();
-    correctSum.debugPrint();
-    diff.debugPrint();
-    correctDiff.debugPrint();
+    hx1.print();
+    hx2.print();
+    sum.print();
+    correctSum.print();
+    diff.print();
+    correctDiff.print();
+
+    std::cout << 'A' + 0 << std::endl;
 }

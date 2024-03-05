@@ -20,7 +20,7 @@ TEST(HexArrayTest, FillConstructorChar) {
     ASSERT_EQ(hx.getSize(), 5);
     unsigned char* arr = hx.getArray();
     for(size_t i = 0; i < 5; ++i)
-        ASSERT_EQ(arr[i], 'A');
+        ASSERT_EQ(arr[i], 10);
 }
 
 TEST(HexArrayTest, FillConstructorCharThrowsException) {

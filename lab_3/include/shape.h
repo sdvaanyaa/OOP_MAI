@@ -17,6 +17,7 @@ public:
     };
     virtual void readCin() {
         std::cout << "Enter 4 points for shape: " << std::endl;
+        std::cout.flush();
         std::cin >> _a >> _b >> _c >> _d;
     };
 
