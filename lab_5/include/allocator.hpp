@@ -46,28 +46,35 @@ public:
         using other = Allocator<U, BLOCK_COUNT>;
     };
 
-    T* allocate(size_t)
-    {
-		if (_free_blocks.size() == 0) {
-			throw(std::bad_alloc());
-		} 
+    std::vector<T*> allocate(size_t count) {
+        std::vector<T*> allocatedBlocks;
 
-        T* p = _free_blocks.back(); 
-        _free_blocks.pop_back();
+        for (size_t i = 0; i < count; ++i) {
+            if (_free_blocks.size() == 0) {
+                throw std::bad_alloc();
+            }
 
-        _used_blocks[p] = true;
-        return p;
-    }
+            T* p = _free_blocks.back();
+            _free_blocks.pop_back();
 
-    void deallocate(T *pointer, size_t)
-    {
-        if (_used_blocks[pointer] == false)
-        {
-            throw (std::bad_alloc());
+            _used_blocks[p] = true;
+            allocatedBlocks.push_back(p);
         }
-        _free_blocks.push_back(pointer); 
-        _used_blocks[pointer] = false;
+
+        return allocatedBlocks;
     }
+
+    void deallocate(size_t blockSize) {
+        const auto& blocks = _allocated_blocks[blockSize];
+
+        for (T* p : blocks) {
+            _free_blocks[blockSize].push_back(p);
+            _used_blocks[p] = false;
+        }
+
+        _allocated_blocks[blockSize].clear();
+    }
+
 
     template <typename U, typename... Args>
     void construct(U *p, Args &&...args)
