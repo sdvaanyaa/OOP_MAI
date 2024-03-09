@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc liblab6_lib.a CMakeFiles/lab6_lib.dir/src/battle.cpp.o CMakeFiles/lab6_lib.dir/src/dragon.cpp.o CMakeFiles/lab6_lib.dir/src/elf.cpp.o CMakeFiles/lab6_lib.dir/src/factory.cpp.o CMakeFiles/lab6_lib.dir/src/knight.cpp.o CMakeFiles/lab6_lib.dir/src/npc.cpp.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib liblab6_lib.a
