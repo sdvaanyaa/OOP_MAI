@@ -1,55 +1,52 @@
-#include "../include/factory.hpp"
-#include "../include/observer.hpp"
+#include "factory.h"
 
-Factory::Factory(std::shared_ptr<IFightObserver> _observer): observer(_observer) {}
 
-Factory::Factory(): observer(CoutObserver::get()) {}
-
-std::shared_ptr<NPC> Factory::produce(std::istream &is){
-    std::shared_ptr<NPC> result;
-    int type{0};
-    if (is >> type)
-    {
-        switch (type)
-        {
+std::shared_ptr<NPC> Create(NpcType type, std::string name, int x, int y) {
+    std::shared_ptr<NPC> hero;
+    switch (type) {
         case DragonType:
-            result = std::make_shared<Dragon>(is);
+            hero = std::make_shared<Dragon>(name, x, y);
             break;
         case KnightType:
-            result = std::make_shared<Knight>(is);
+            hero = std::make_shared<Knight>(name, x, y);
             break;
         case ElfType:
-            result = std::make_shared<Elf>(is);
+            hero = std::make_shared<Elf>(name, x, y);
             break;
-        }
     }
-    else
-        std::cerr << "unexpected NPC type:" << type << std::endl;
-
-    if (result)
-        result->subscribe(observer);
-
-    return result;
+    return hero;
 }
 
-std::shared_ptr<NPC> Factory::produce(NpcType type, int x, int y, std::string name){
-    std::shared_ptr<NPC> result;
-    switch (type)
-    {
-    case DragonType:
-        result = std::make_shared<Dragon>(x, y, name);
-        break;
-    case KnightType:
-        result = std::make_shared<Knight>(x, y, name);
-        break;
-    case ElfType:
-        result = std::make_shared<Elf>(x, y, name);
-        break;
-    default:
-        break;
+std::shared_ptr<NPC> Create(std::istream& stream) {
+    std::shared_ptr<NPC> hero;
+    int type;
+    stream >> type;
+    switch(type) {
+        case DragonType:
+            hero = std::make_shared<Dragon>(stream);
+            break;
+        case KnightType:
+            hero = std::make_shared<Knight>(stream);
+            break;
+        case ElfType:
+            hero = std::make_shared<Elf>(stream);
+            break;
     }
-    if (result)
-        result->subscribe(observer);
+    return hero;
+}
 
-    return result;
+std::string randname() {
+    std::map<int, std::string> name;
+    name.insert({0, "Astarion"});
+    name.insert({1, "Gale"});
+    name.insert({2, "Lae'zel"});
+    name.insert({3, "Shadowheart"});
+    name.insert({4, "Wyll"});
+    name.insert({5, "Baeloth"});
+    name.insert({6, "Korga"});
+    name.insert({7, "Volo"});
+    name.insert({8, "Zevlor"});
+    name.insert({9, "Kazador"});
+
+    return name[std::rand() % 10];
 }

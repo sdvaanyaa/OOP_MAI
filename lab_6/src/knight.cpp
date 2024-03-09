@@ -1,46 +1,35 @@
-#include "../include/knight.hpp"
-#include "../include/elf.hpp"
-#include "../include/dragon.hpp"
+#include "dragon.h"
+#include "knight.h"
+#include "elf.h"
 
-Knight::Knight(int x, int y, std::string name) : NPC(KnightType, x, y, name) {}
+Knight::Knight(std::string name, int x, int y) : NPC(KnightType, name, x, y) {}
 Knight::Knight(std::istream &is) : NPC(KnightType, is) {}
 
-bool Knight::accept(std::shared_ptr<NPC> visitor) 
-{
-    return visitor->visit(std::make_shared<Knight>(*this));
+void Knight::print() {
+    std::cout << *this;
 }
 
-bool Knight::fight(std::shared_ptr<Dragon> other)
+void Knight::print(std::ostream &os) {
+    os << *this;
+}
+
+bool Knight::accept(std::shared_ptr<Visitor>& visitor, std::shared_ptr<NPC> attacker) {
+    std::shared_ptr<Knight> self = std::dynamic_pointer_cast<Knight>(shared_from_this());
+    if (!self) {
+         throw std::runtime_error("dynamic_pointer_cast failed");
+    }
+    if (visitor -> visit(self)) 
+        attacker -> fight_notify(self);
+    return visitor -> visit(self);
+}
+
+bool KnightVisitor::visit(const std::shared_ptr<Dragon>& other)
 {
-    fight_notify(other, true);
     return true;
-}
-
-bool Knight::fight(std::shared_ptr<Knight> other)
-{
-    fight_notify(other, false);
-    return false;
-}
-
-bool Knight::fight(std::shared_ptr<Elf> other)
-{
-    fight_notify(other, false);
-    return false;
-}
-
-void Knight::save(std::ostream &os)
-{
-    os << KnightType << std::endl;
-    NPC::save(os);
-}
-
-void Knight::print(std::ostream &os) 
-{
-    os << *this << std::endl;
 }
 
 std::ostream &operator<<(std::ostream &os, Knight &knight)
 {
-    os << "knight: " << *static_cast<NPC *>(&knight);
+    os << "knight " << knight.get_name() << ": " << *static_cast<NPC *>(&knight) << std::endl;
     return os;
 }

@@ -1,25 +1,41 @@
-#include "../include/npc.hpp"
+#include "npc.h"
+#include "observer.h"
 
-NPC::NPC(NpcType t, int _x, int _y, std::string _name) : type(t), x(_x), y(_y), name(_name) {}
+NPC::NPC(NpcType t, std::string name, int _x, int _y) : type(t), _name(name), x(_x), y(_y) {}
 NPC::NPC(NpcType t, std::istream &is) : type(t)
 {
+    is >> _name;
     is >> x;
     is >> y;
-    is >> name;
 }
 
-void NPC::subscribe(std::shared_ptr<IFightObserver> observer)
+std::string NPC::get_name() const{
+    return _name;
+}
+
+int NPC::get_x() const {
+    return x;
+}
+int NPC::get_y() const{
+    return y;
+}
+
+NpcType NPC::get_type() const{
+    return type;
+}
+
+void NPC::subscribe(std::shared_ptr<Observer> observer)
 {
    observers.push_back(observer);
 }
 
-void NPC::fight_notify(const std::shared_ptr<NPC> defender, bool win)
+void NPC::fight_notify(const std::shared_ptr<NPC> defender)
 {
     for (auto &o : observers)
-        o->on_fight(shared_from_this(), defender, win);
+        o->update(shared_from_this(), defender);
 }
 
-bool NPC::is_close(const std::shared_ptr<NPC> &other, size_t distance) const
+bool NPC::is_close(const std::shared_ptr<NPC> &other, std::size_t distance) const
 {
     if (std::pow(x - other->x, 2) + std::pow(y - other->y, 2) <= std::pow(distance, 2))
         return true;
@@ -27,52 +43,20 @@ bool NPC::is_close(const std::shared_ptr<NPC> &other, size_t distance) const
         return false;
 }
 
-void NPC::save(std::ostream &os)
-{
-    os << x << std::endl;
-    os << y << std::endl;
-    os << name << std::endl;
+bool Visitor::visit(const std::shared_ptr<Dragon>& other) {
+    return false;
+}
+
+bool Visitor::visit(const std::shared_ptr<Knight>& other) {
+    return false;
+}
+
+bool Visitor::visit(const std::shared_ptr<Elf>& other) {
+    return false;
 }
 
 std::ostream &operator<<(std::ostream &os, NPC &npc)
 {
-    os << "{ x:" << npc.x << ", y:" << npc.y << ", name: " << npc.name << " }";
+    os << "{x:" << npc.x << ", y:" << npc.y << "} ";
     return os;
-}
-
-std::ostream &operator<<(std::ostream &os, const set_t &npcs)
-{
-    for (auto &n : npcs)
-        n->print(os);
-    return os;
-}
-
-set_t fight(const set_t &npcs, size_t distance)
-{
-    set_t dead_list;
-
-    for (const auto &attacker : npcs)
-        for (const auto &defender : npcs)
-            if ((attacker != defender) && (attacker->is_close(defender, distance)))
-            {
-                bool success{false};
-                success = attacker->accept(defender);
-                if (success)
-                    dead_list.insert(defender);
-            }
-
-    return dead_list;
-}
-
-
-bool NPC::visit(std::shared_ptr<Knight> knight) {
-    return this->fight(knight);
-}
-
-bool NPC::visit(std::shared_ptr<Elf> elf) {
-    return this->fight(elf);
-}
-
-bool NPC::visit(std::shared_ptr<Dragon> dragon) {
-    return this->fight(dragon);
 }
