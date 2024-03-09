@@ -1,0 +1,65 @@
+Murder...
+dragon Crystal Maiden: {x:458, y:139} 
+killed
+dragon Invoker: {x:472, y:165} 
+
+Murder...
+elf Juggernaut: {x:65, y:420} 
+killed
+knight Crystal Maiden: {x:75, y:424} 
+
+Murder...
+dragon Invoker: {x:472, y:165} 
+killed
+dragon Crystal Maiden: {x:458, y:139} 
+
+Killing...
+dragon Invoker: {x:402, y:211} 
+killed
+elf Invoker: {x:366, y:152} 
+
+Killing...
+dragon Gale: {x:315, y:436} 
+killed
+dragon Shadowheart: {x:276, y:408} 
+
+Killing...
+dragon Gale: {x:315, y:436} 
+killed
+knight Shadowheart: {x:297, y:458} 
+
+Killing...
+dragon Gale: {x:315, y:436} 
+killed
+elf Shadowheart: {x:418, y:436} 
+
+Killing...
+dragon Gale: {x:315, y:436} 
+killed
+dragon Astarion: {x:265, y:479} 
+
+Killing...
+dragon Shadowheart: {x:1, y:132} 
+killed
+dragon Wyll: {x:13, y:142} 
+
+Killing...
+dragon Shadowheart: {x:276, y:408} 
+killed
+dragon Gale: {x:315, y:436} 
+
+Killing...
+dragon Shadowheart: {x:276, y:408} 
+killed
+dragon Lae'zel: {x:199, y:369} 
+
+Killing...
+dragon Wyll: {x:13, y:142} 
+killed
+dragon Shadowheart: {x:1, y:132} 
+
+Killing...
+dragon Zevlor: {x:45, y:161} 
+killed
+elf Astarion: {x:15, y:121} 
+

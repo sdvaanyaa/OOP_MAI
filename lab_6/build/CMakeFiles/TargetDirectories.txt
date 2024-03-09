@@ -1,0 +1,6 @@
+/Users/ivan/OOP_MAI/lab_6/build/CMakeFiles/lab6_lib.dir
+/Users/ivan/OOP_MAI/lab_6/build/CMakeFiles/lab6_exe.dir
+/Users/ivan/OOP_MAI/lab_6/build/CMakeFiles/lab6_tests_exe.dir
+/Users/ivan/OOP_MAI/lab_6/build/CMakeFiles/test.dir
+/Users/ivan/OOP_MAI/lab_6/build/CMakeFiles/edit_cache.dir
+/Users/ivan/OOP_MAI/lab_6/build/CMakeFiles/rebuild_cache.dir
